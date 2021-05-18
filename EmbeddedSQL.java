@@ -250,10 +250,10 @@ public class EmbeddedSQL {
    
    public static void Query1(EmbeddedSQL esql){
       try{
-         String query = "SELECT S.sid, COUNT (*) AS pcount"; 
-         query += "FROM Parts P, Suppliers S, Catalog C";;
-         query += "WHERE P.pid = C.pid AND S.sid = C.sid";
-         query += "GROUP BY S.sid";
+         String query = "SELECT S.sid, COUNT (*) AS pcount "; 
+         query += " FROM Parts P, Suppliers S, Catalog C ";
+         query += " WHERE P.pid = C.pid AND S.sid = C.sid ";
+         query += " GROUP BY S.sid ";
 
          int rowCount = esql.executeQuery(query);
          System.out.println ("total row(s): " + rowCount);
@@ -264,11 +264,11 @@ public class EmbeddedSQL {
 
    public static void Query2(EmbeddedSQL esql){
       try{
-         String query = "SELECT S.sid, COUNT (*) AS pcount"; 
-         query += "FROM Parts P, Suppliers S, Catalog C";;
-         query += "WHERE P.pid = C.pid AND S.sid = C.sid";
-         query += "GROUP BY S.sid";
-         query += "HAVING COUNT (*) > 2";
+         String query = "SELECT S.sid, COUNT (*) AS pcount "; 
+         query += " FROM Parts P, Suppliers S, Catalog C ";
+         query += " WHERE P.pid = C.pid AND S.sid = C.sid ";
+         query += " GROUP BY S.sid ";
+         query += " HAVING COUNT (*) > 2";
 
          int rowCount = esql.executeQuery(query);
          System.out.println ("total row(s): " + rowCount);
@@ -279,17 +279,17 @@ public class EmbeddedSQL {
 
    public static void Query3(EmbeddedSQL esql){
       try{
-         String query = "SELECT S3.sname, COUNT(*) AS pcount"; 
-         query += "FROM Suppliers S3";
-         query += "WHERE S3.sid IN (";
-         query += "SELECT S.sid";
-         query += "FROM Suppliers S, Parts P, Catalog C";
-         query += "WHERE P.pid = C.pid AND S.sid = C.sid AND P.color =  'Green'";
-         query += "EXCEPT";
-         query += "SELECT S2.sid";
-         query += "FROM Suppliers S2, Parts P2, Catalog C2";
-         query += "WHERE P2.pid = C2.pid AND S2.sid = C2.sid AND P2.color !=  'Green')";
-         query += "GROUP BY S3.sname";
+         String query = "SELECT S3.sname, COUNT(*) AS pcount "; 
+         query += " FROM Suppliers S3 ";
+         query += " WHERE S3.sid IN ( ";
+         query += " SELECT S.sid ";
+         query += " FROM Suppliers S, Parts P, Catalog C ";
+         query += " WHERE P.pid = C.pid AND S.sid = C.sid AND P.color =  'Green' ";
+         query += " EXCEPT ";
+         query += " SELECT S2.sid ";
+         query += " FROM Suppliers S2, Parts P2, Catalog C2 ";
+         query += " WHERE P2.pid = C2.pid AND S2.sid = C2.sid AND P2.color !=  'Green') ";
+         query += " GROUP BY S3.sname";
 
          int rowCount = esql.executeQuery(query);
          System.out.println ("total row(s): " + rowCount);
@@ -301,15 +301,15 @@ public class EmbeddedSQL {
    public static void Query4(EmbeddedSQL esql){
       try{
          String query = "SELECT S.sname, MAX(C.cost)"; 
-         query += "FROM Suppliers S, Catalog C";
-         query += "WHERE S.sid = C.sid AND S.sid IN (SELECT S.sid";
-         query += "FROM Suppliers S, Parts P, Catalog C";
-         query += "WHERE P.pid = C.pid AND S.sid = C.sid AND P.color =  'Green'";
-         query += "INTERSECT";
-         query += "SELECT S.sid";
-         query += "FROM Suppliers S, Parts P, Catalog C";
-         query += "WHERE P.pid = C.pid AND S.sid = C.sid AND P.color =  'Red' )";
-         query += "GROUP BY S.sname";
+         query += " FROM Suppliers S, Catalog C";
+         query += " WHERE S.sid = C.sid AND S.sid IN (SELECT S.sid";
+         query += " FROM Suppliers S, Parts P, Catalog C";
+         query += " WHERE P.pid = C.pid AND S.sid = C.sid AND P.color =  'Green'";
+         query += " INTERSECT";
+         query += " SELECT S.sid";
+         query += " FROM Suppliers S, Parts P, Catalog C";
+         query += " WHERE P.pid = C.pid AND S.sid = C.sid AND P.color =  'Red' )";
+         query += " GROUP BY S.sname";
 
          int rowCount = esql.executeQuery(query);
          System.out.println ("total row(s): " + rowCount);
@@ -320,9 +320,9 @@ public class EmbeddedSQL {
 
    public static void Query5(EmbeddedSQL esql){
       try{
-         String query = "SELECT C.sid"; 
-         query += "FROM Catalog C";;
-         query += "WHERE C.cost < ";
+         String query = "SELECT DISTINCT P.pname" 
+         query += " FROM Catalog C, Parts P";
+         query += " WHERE C.pid = P.pid AND C.cost < ";
          System.out.print("\tEnter cost: $");
          String input = in.readLine();
          query += input;
@@ -337,12 +337,12 @@ public class EmbeddedSQL {
    public static void Query6(EmbeddedSQL esql){
       try{
          String query = "SELECT S.address"; 
-         query += "FROM Suppliers S, Parts P, Catalog C";;
-         query += "WHERE P.pid = C.pid AND S.sid = C.pid AND p.name = \'";
+         query += " FROM Suppliers S, Parts P, Catalog C";
+         query += " WHERE P.pid = C.pid AND C.sid = S.sid AND P.pname = '";
          System.out.print("\tEnter part name: ");
          String input = in.readLine();
          query += input + "'";
-
+         System.out.println(query);//
          int rowCount = esql.executeQuery(query);
          System.out.println ("total row(s): " + rowCount);
       }catch(Exception e){
