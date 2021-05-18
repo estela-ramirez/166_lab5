@@ -342,7 +342,7 @@ public class EmbeddedSQL {
          System.out.print("\tEnter part name: ");
          String input = in.readLine();
          query += input + "'";
-         System.out.println(query);//
+    
          int rowCount = esql.executeQuery(query);
          System.out.println ("total row(s): " + rowCount);
       }catch(Exception e){
